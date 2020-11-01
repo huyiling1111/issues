@@ -1,36 +1,47 @@
 import React from "react"
 import ReactDOM from "react-dom"
 const rootElement = document.getElementById("root")
-let _state;
+let _state = [];
+let index = 0
 const myUseState = initialValue => {
-    console.log("myUseState run")
-    _state = _state === undefined ? initialValue : _state
+    const currentIndex = index
+    console.log(`currentIndex2:${currentIndex}`)
+
+    _state[currentIndex] = _state[currentIndex] === undefined ? initialValue : _state[currentIndex]
     const setState = newValue => {
-        _state = newValue
-        console.log(5)
+        console.log(`currentIndex1:${currentIndex}`)
+        _state[currentIndex] = newValue
+        console.log(_state)
         render()
     }
-    return [_state, setState]
+    index += 1
+    console.log(`index:${index}`)
+    console.log(`_state:${_state}`)
+    console.log('--------')
+    return [_state[currentIndex], setState]
 }
 
 const render = () => {
+    index = 0
     ReactDOM.render(<App />, rootElement)
 }
 
 
 function App() {
-    console.log(1)
     const [n, setN] = myUseState(0)
-    console.log(2)
+    const [m, setM] = myUseState(0)
     return (
         <div className="App">
             <p>{n}</p>
             <p>
                 <button onClick={() => setN(n + 1)} >+1</button>
             </p>
+            <p>{m}</p>
+            <p>
+                <button onClick={() => setM(m + 1)} >+1</button>
+            </p>
         </div>
     )
 }
 
-ReactDOM.render(<App />, rootElement)
 export default App
